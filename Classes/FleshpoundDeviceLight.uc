@@ -1,18 +1,35 @@
 class FleshpoundDeviceLight extends Engine.Light;
 
-function ChangeToRed() 
+const HUE_Red = 255;
+const HUE_Yellow = 36;
+
+var protected bool bRed;
+
+simulated function Tick(float DeltaTime)
 {
-    LightHue = 255;
+    if (bRed && LightHue != HUE_Red)
+        ChangeToRed();
+    else if (!bRed && LightHue != HUE_Yellow)
+        ChangeToYellow();
+
+    super.Tick(DeltaTime);
 }
 
-function ChangeToYellow() 
+simulated function ChangeToRed() 
 {
-    LightHue = 36;
+    LightHue = HUE_Red;
+    bRed = True;
+}
+
+simulated function ChangeToYellow() 
+{
+    LightHue = HUE_Yellow;
+    bRed = False;
 }
 
 defaultproperties
 {
-    LightHue=36
+    LightHue=HUE_Yellow
     LightSaturation=0
     LightBrightness=255.00000
     LightRadius=3.000000
